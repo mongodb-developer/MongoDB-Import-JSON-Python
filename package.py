@@ -4,16 +4,16 @@ from pymongo import MongoClient
 
 # Making Connection
 myclient = MongoClient(
-    "mongodb+srv://bipin:mynameis@sandbox.jadwj.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+    "<mongo-uri>")
 
 
-db = myclient["test"]
+db = myclient["<DATABASE>"]
 
 
-Collection = db["jsonImport"]
+Collection = db["<COLLECTION>"]
 
 # Loading or Opening the json file
-with open("C:\\Users\\Bipin\\Downloads\\Data.json") as file:
+with open("<FILE PATH>") as file:
     file_data = json.load(file)
 
 if isinstance(file_data, list):
