@@ -1,24 +1,16 @@
+import pymongo
 import json
-from pymongo import MongoClient
+from pymongo import MongoClient, InsertOne
 
+client = pymongo.MongoClient("mongodb+srv://test:test@cluster0.d1apg.mongodb.net/myData?retryWrites=true&w=majority")
+db = client.mydata
+collection = db.mytable
+requesting = []
 
-# Making Connection
-myclient = MongoClient(
-    "<mongo-uri>")
+with open("C:\\Users\\bishwanath.parajuli\\Desktop\\2.json") as f:
+    for jsonObj in f:
+        myDict = json.loads(jsonObj)
+        requesting.append(InsertOne(myDict))
 
-
-db = myclient["<DATABASE>"]
-
-
-Collection = db["<COLLECTION>"]
-
-# Loading or Opening the json file
-with open("<FILE PATH>") as file:
-    file_data = json.load(file)
-
-if isinstance(file_data, list):
-    Collection.insert_many(file_data)
-    print("inserted")
-else:
-    Collection.insert_one(file_data)
-    print("inserted")
+result = collection.bulk_write(requesting)
+client.close()
